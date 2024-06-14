@@ -29,6 +29,12 @@ if selection == "Home":
     st.image(image, width=400)
     st.markdown("""
         <h3>Welcome to FieldAi!</h3>
+        <p>This application leverages AI to enhance agricultural practices.</p>
+        <h2>Features:</h2>
+        <ul>
+            <li><strong>Crop Recommendation:</strong> Recommends the best crops to plant based on soil and weather conditions.</li>
+            <li><strong>Plant Diseases Detection:</strong> Detects diseases in plants using AI-powered image analysis.</li>
+        </ul>
         <p>Select a feature from the navigation menu.</p>
         """, unsafe_allow_html=True)
 
