@@ -18,14 +18,14 @@ load_bootstrap()
 
 # Sidebar content
 with st.sidebar:
-    image = Image.open('FieldAi_Logo Full.png')
+    image = Image.open('FieldAi_Logo bulat.png')
     st.image(image, width=250)
     st.title("Navigation")
     selection = st.radio("Go to", ["Home", "Crop Recommendation System", "Plant Diseases Detection"])
 
 # Main content
 if selection == "Home":
-    image = Image.open('FieldAi_Logo bulat.png')
+    image = Image.open('FieldAi_Logo Full.png')
     st.image(image, width=400)
     st.markdown("""
         <h3>Welcome to FieldAi!</h3>
