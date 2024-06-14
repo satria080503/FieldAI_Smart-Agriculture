@@ -64,7 +64,7 @@ with st.sidebar:
 
     df_desc = pd.read_csv('Dataset/Crop_Des.csv', sep = ';', encoding = 'utf-8')
 
-    df = pd.read_csv('Dataset/Crop_recom')
+    df = pd.read_csv('Dataset/Crop_recom.csv')
 
     model_path = 'Model/RDF_model.hdf5'  # Adjust if necessary
     print(f"Loading model from: {model_path}")
