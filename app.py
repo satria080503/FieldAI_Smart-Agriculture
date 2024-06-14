@@ -25,7 +25,8 @@ with st.sidebar:
 
 # Main content
 if selection == "Home":
-    st.image(Image.open('FieldAi_Logo full.png'), width=400)
+    image = Image.open('FieldAi_Logo bulat.png')
+    st.image(image, width=400)
     st.markdown("""
         <h3>Welcome to FieldAi!</h3>
         <p>Select a feature from the navigation menu.</p>
