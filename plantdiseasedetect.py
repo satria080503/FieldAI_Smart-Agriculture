@@ -8,6 +8,8 @@ from tensorflow import keras
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras import layers
 
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+tf.keras.backend.set_float32(True)
 def show_page():
     def get_plant_names():
         supported_plants = ["Apple", "Blueberry", "Cherry", "Corn", "Grape",
