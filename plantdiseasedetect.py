@@ -3,7 +3,7 @@ import streamlit as st
 import plotly.express as px
 import numpy as np
 from PIL import Image
-import tensorflow as tf
+import tensorflow 
 from tensorflow import keras
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras import layers
