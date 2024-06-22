@@ -18,7 +18,7 @@ def show_page():
 
     def predict(img):
         tf.compat.v1.disable_eager_execution()
-        model = keras.models.load_model("Model/pd_mod1.h5", custom_objects={'DepthwiseConv2D': layers.DepthwiseConv2D})
+        model = keras.models.load_model("Model/pd_model.h5", custom_objects={'DepthwiseConv2D': layers.DepthwiseConv2D})
 
 
         # Load the Image
