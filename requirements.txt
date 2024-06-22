@@ -1,6 +1,6 @@
 streamlit
 joblib
 scikit-learn
-tensorflow-gpu
+tensorflow
 Pillow
 plotly
