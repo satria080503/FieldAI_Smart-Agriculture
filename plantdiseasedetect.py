@@ -17,22 +17,22 @@ def show_page():
         return supported_plants
 
     def predict(img):
-        tf.compat.v1.disable_eager_execution()
-        model = keras.models.load_model("Model/Plant_disease.h5", custom_objects={'DepthwiseConv2D': layers.DepthwiseConv2D})
-
+        model = keras.models.load_model("Model/pd_model.hdf5")
 
         # Load the Image
         img = Image.open(img)
-        target_size = (224, 224)
-        img = tf.image.resize(img, target_size)
-        img = image.img_to_array(img, dtype=np.uint8).numpy()
 
-        # Scaling the Image Array values     between 0 and 1
+        # Resize Image to size of (300, 300)
+        img = tensorflow.image.resize(img, (256, 256))
+
+        # Convert Image to a numpy array
+        img = image.img_to_array(img, dtype=np.uint8)
+
+        # Scaling the Image Array values between 0 and 1
         img = np.array(img)/255.0
-        img = img.reshape((1, 224, 224, 3))
 
         # Get the Predicted Label for the loaded Image
-        prediction = model.predict(img)
+        prediction = model.predict(img[np.newaxis, ...])
 
         # Label array
         labels = {0:'Apple___Apple_scab',1:'Apple___Black_rot',2:'Apple___Cedar_apple_rust',3:'Apple___healthy',
