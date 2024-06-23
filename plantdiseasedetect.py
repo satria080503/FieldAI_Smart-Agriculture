@@ -9,7 +9,6 @@ from tensorflow.keras.preprocessing import image
 
 # Ensure TensorFlow runs in eager mode
 tf.config.run_functions_eagerly(True)
-tf.data.experimental.enable_debug_mode()
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
