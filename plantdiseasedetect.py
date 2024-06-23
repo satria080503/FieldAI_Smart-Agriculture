@@ -8,6 +8,7 @@ from tensorflow import keras
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras import layers
 
+tf.config.run_functions_eagerly(True)
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 def show_page():
