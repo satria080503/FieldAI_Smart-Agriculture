@@ -20,37 +20,38 @@ def show_page():
         return supported_plants
 
     def predict(img):
+        # Load the model
         model = keras.models.load_model("Model/pd_model.hdf5")
         
         # Ensure model is compiled
         if not model.compiled_metrics:
             model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-        # Load the Image
+        # Load the image
         img = Image.open(img)
-
-        # Resize Image to size of (256, 256)
+        
+        # Resize image to (256, 256)
         img = img.resize((256, 256))
-
-        # Convert Image to a numpy array
+        
+        # Convert image to numpy array
         img = image.img_to_array(img, dtype=np.uint8)
-
-        # Scaling the Image Array values between 0 and 1
+        
+        # Scale image array values between 0 and 1
         img = np.array(img) / 255.0
-
+        
         # Ensure the image is in the right format for prediction
         img = np.expand_dims(img, axis=0)
-
+        
         # Debugging: Print the shape and type of the image array
         st.write(f"Image shape for prediction: {img.shape}")
         st.write(f"Image dtype: {img.dtype}")
-
-        # Get the Predicted Label for the loaded Image
+        
+        # Get the predicted label for the loaded image
         prediction = model.predict(img)
-
+        
         # Debugging: Print the raw prediction output
         st.write(f"Raw prediction output: {prediction}")
-
+        
         # Label array
         labels = {
             0: 'Apple___Apple_scab', 1: 'Apple___Black_rot', 2: 'Apple___Cedar_apple_rust', 3: 'Apple___healthy',
@@ -65,10 +66,10 @@ def show_page():
             34: 'Tomato___Spider_mites Two-spotted_spider_mite', 35: 'Tomato___Target_Spot', 36: 'Tomato___Tomato_mosaic_virus',
             37: 'Tomato___Tomato_Yellow_Leaf_Curl_Virus'
         }
-
-        # Predicted Class
+        
+        # Predicted class
         predicted_class = labels[np.argmax(prediction[0], axis=-1)]
-
+        
         return [prediction, predicted_class]
 
     supported_plants = get_plant_names()
@@ -101,3 +102,6 @@ def show_page():
             st.markdown(f"#### The Image Is Classified As `{predicted_class.capitalize()}` With A Probability Of `{max(prob)}%`", True)
     else:
         st.write("#### No Image Was Found, Please Retry!!!")
+
+if __name__ == "__main__":
+    show_page()
