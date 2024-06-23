@@ -37,8 +37,15 @@ def show_page():
         # Ensure the image is in the right format for prediction
         img = np.expand_dims(img, axis=0)
 
+        # Debugging: Print the shape and type of the image array
+        st.write(f"Image shape for prediction: {img.shape}")
+        st.write(f"Image dtype: {img.dtype}")
+
         # Get the Predicted Label for the loaded Image
         prediction = model.predict(img)
+
+        # Debugging: Print the raw prediction output
+        st.write(f"Raw prediction output: {prediction}")
 
         # Label array
         labels = {0: 'Apple___Apple_scab', 1: 'Apple___Black_rot', 2: 'Apple___Cedar_apple_rust', 3: 'Apple___healthy',
