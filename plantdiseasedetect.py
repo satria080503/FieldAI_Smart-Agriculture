@@ -37,9 +37,6 @@ def show_page():
         # Get the Predicted Label for the loaded Image
         prediction = model.predict(img)
 
-        # Debugging: Print the raw prediction output
-        st.write(f"Raw prediction output: {prediction}")
-
         # Label array
         labels = {0: 'Apple___Apple_scab', 1: 'Apple___Black_rot', 2: 'Apple___Cedar_apple_rust', 3: 'Apple___healthy',
                   4: 'Blueberry___healthy', 5: 'Cherry_(including_sour)___healthy', 6: 'Cherry_(including_sour)___Powdery_mildew',
