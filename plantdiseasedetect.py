@@ -33,21 +33,14 @@ def show_page():
         # Resize image to (256, 256)
         img = img.resize((256, 256))
         
-        # Convert image to numpy array
-        img = image.img_to_array(img, dtype=np.uint8)
-        
-        # Scale image array values between 0 and 1
-        img = np.array(img) / 255.0
-        
-        # Ensure the image is in the right format for prediction
-        img = np.expand_dims(img, axis=0)
-        
-        # Debugging: Print the shape and type of the image array
-        st.write(f"Image shape for prediction: {img.shape}")
-        st.write(f"Image dtype: {img.dtype}")
-        
-        # Get the predicted label for the loaded image
-        prediction = model.predict(img)
+        img_array = image.img_to_array(img)
+        img_array = tf.expand_dims(img_array, 0)  # Add batch dimension
+
+        # Normalize image
+        img_array = img_array / 255.0
+
+        # Make prediction
+        prediction = model.predict(img_array)
         
         # Debugging: Print the raw prediction output
         st.write(f"Raw prediction output: {prediction}")
