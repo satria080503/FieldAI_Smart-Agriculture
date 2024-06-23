@@ -9,6 +9,7 @@ from tensorflow.keras.preprocessing import image
 
 # Ensure TensorFlow runs in eager mode
 tf.config.run_functions_eagerly(True)
+tf.data.experimental.enable_debug_mode()
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
@@ -34,8 +35,11 @@ def show_page():
         # Scaling the Image Array values between 0 and 1
         img = np.array(img) / 255.0
 
+        # Ensure the image is in the right format for prediction
+        img = np.expand_dims(img, axis=0)
+
         # Get the Predicted Label for the loaded Image
-        prediction = model.predict(img[np.newaxis, ...])
+        prediction = model.predict(img)
 
         # Label array
         labels = {0: 'Apple___Apple_scab', 1: 'Apple___Black_rot', 2: 'Apple___Cedar_apple_rust', 3: 'Apple___healthy',
