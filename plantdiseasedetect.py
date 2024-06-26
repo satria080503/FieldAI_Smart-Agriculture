@@ -15,11 +15,14 @@ class FixedDropout(Layer):
     def __init__(self, rate, **kwargs):
         super(FixedDropout, self).__init__(**kwargs)
         self.rate = rate
+        # Handle any additional arguments
+        self.seed = kwargs.get('seed', None)
+        self.noise_shape = kwargs.get('noise_shape', None)
 
     def call(self, inputs, training=None):
         if not training:
             return inputs
-        return tf.nn.dropout(inputs, rate=self.rate)
+        return tf.nn.dropout(inputs, rate=self.rate, seed=self.seed, noise_shape=self.noise_shape)
 
 def show_page():
     def get_plant_names():
@@ -30,8 +33,8 @@ def show_page():
 
     def predict(img):
         model = keras.models.load_model("Model/best_model_pd.h5", custom_objects={
-        'swish': tf.keras.activations.swish,
-        'FixedDropout': FixedDropout
+            'swish': tf.keras.activations.swish,
+            'FixedDropout': FixedDropout
         })
         # Load the Image
         img = Image.open(img)
