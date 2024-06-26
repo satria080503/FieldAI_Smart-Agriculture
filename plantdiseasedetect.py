@@ -8,21 +8,24 @@ from tensorflow import keras
 from tensorflow.keras.preprocessing import image
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
-from tensorflow.keras.layers import Layer
+from tensorflow.keras.layers import Layer, LeakyReLU
 
 @tf.keras.utils.register_keras_serializable()
 class FixedDropout(Layer):
     def __init__(self, rate, **kwargs):
+        seed = kwargs.pop('seed', None)
+        noise_shape = kwargs.pop('noise_shape', None)
         super(FixedDropout, self).__init__(**kwargs)
         self.rate = rate
-        # Ignore any additional arguments
-        kwargs.pop('seed', None)
-        kwargs.pop('noise_shape', None)
 
     def call(self, inputs, training=None):
         if not training:
             return inputs
         return tf.nn.dropout(inputs, rate=self.rate)
+
+@tf.keras.utils.register_keras_serializable()
+def swish(x):
+    return tf.nn.swish(x)
 
 def show_page():
     def get_plant_names():
@@ -33,8 +36,9 @@ def show_page():
 
     def predict(img):
         model = keras.models.load_model("Model/best_model_pd.h5", custom_objects={
-            'swish': tf.keras.activations.swish,
-            'FixedDropout': FixedDropout
+            'swish': swish,
+            'FixedDropout': FixedDropout,
+            'LeakyReLU': LeakyReLU,
         })
         # Load the Image
         img = Image.open(img)
@@ -98,7 +102,8 @@ def show_page():
                       28: 'Tomato___Bacterial_spot', 29: 'Tomato___Early_blight', 30: 'Tomato___healthy', 31: 'Tomato___Late_blight',
                       32: 'Tomato___Leaf_Mold', 33: 'Tomato___Septoria_leaf_spot', 34: 'Tomato___Spider_mites Two-spotted_spider_mite',
                       35: 'Tomato___Target_Spot', 36: 'Tomato___Tomato_mosaic_virus', 37: 'Tomato___Tomato_Yellow_Leaf_Curl_Virus'}
-
+            
+            print(predict)
             classes = []
             prob = []
             for i, j in enumerate(prediction[0], 0):
