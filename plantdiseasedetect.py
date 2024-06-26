@@ -40,6 +40,7 @@ def show_page():
             'FixedDropout': FixedDropout,
             'LeakyReLU': LeakyReLU,
         })
+
         # Load the Image
         img = Image.open(img)
 
@@ -50,10 +51,12 @@ def show_page():
         img = image.img_to_array(img)
 
         img = np.expand_dims(img, axis=0) / 255.0
-        print(f"Input image shape: {img.shape}") 
+        st.write(f"Input image shape: {img.shape}")  # Optional: Display input image shape
+
         # Get the Predicted Label for the loaded Image
         prediction = model.predict(img)
-        print(f"Prediction shape: {prediction.shape}")
+        st.write(f"Prediction shape: {prediction.shape}")  # Optional: Display prediction shape
+
         # Label array
         labels = {0: 'Apple___Apple_scab', 1: 'Apple___Black_rot', 2: 'Apple___Cedar_apple_rust', 3: 'Apple___healthy',
                   4: 'Blueberry___healthy', 5: 'Cherry_(including_sour)___healthy', 6: 'Cherry_(including_sour)___Powdery_mildew',
@@ -70,7 +73,7 @@ def show_page():
         # Predicted Class
         predicted_class = labels[np.argmax(prediction[0], axis=-1)]
 
-        return [prediction, predicted_class]
+        return prediction, predicted_class
 
     supported_plants = get_plant_names()
     st.write("# Plant Leaf Disease Classification")
@@ -87,6 +90,7 @@ def show_page():
         if button:
             prediction, predicted_class = predict(uploaded_image)
 
+            # Prepare data for plotting
             labels = {0: 'Apple___Apple_scab', 1: 'Apple___Black_rot', 2: 'Apple___Cedar_apple_rust', 3: 'Apple___healthy',
                       4: 'Blueberry___healthy', 5: 'Cherry_(including_sour)___healthy', 6: 'Cherry_(including_sour)___Powdery_mildew',
                       7: 'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot', 8: 'Corn_(maize)___Common_rust_', 9: 'Corn_(maize)___healthy',
@@ -98,8 +102,7 @@ def show_page():
                       28: 'Tomato___Bacterial_spot', 29: 'Tomato___Early_blight', 30: 'Tomato___healthy', 31: 'Tomato___Late_blight',
                       32: 'Tomato___Leaf_Mold', 33: 'Tomato___Septoria_leaf_spot', 34: 'Tomato___Spider_mites Two-spotted_spider_mite',
                       35: 'Tomato___Target_Spot', 36: 'Tomato___Tomato_mosaic_virus', 37: 'Tomato___Tomato_Yellow_Leaf_Curl_Virus'}
-            
-            print(predict)
+
             classes = []
             prob = []
             for i, j in enumerate(prediction[0], 0):
@@ -109,10 +112,10 @@ def show_page():
             fig = px.bar(x=classes, y=prob,
                          text=prob, color=classes,
                          labels={"x": "Disease", "y": "Probability(%)"})
-            st.markdown("#### Probability Distribution Bar Chart", True)
+            st.markdown("#### Probability Distribution Bar Chart")
             st.plotly_chart(fig)
 
-            st.markdown(f"#### The Image Is Classified As `{predicted_class.capitalize()}` With A Probability Of `{max(prob)}%`", True)
+            st.markdown(f"#### The Image Is Classified As `{predicted_class.capitalize()}` With A Probability Of `{max(prob)}%`")
     else:
         st.write("#### No Image Was Found, Please Retry!!!")
 
