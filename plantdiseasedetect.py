@@ -17,7 +17,7 @@ def show_page():
         return supported_plants
 
     def predict(img):
-        model = keras.models.load_model("Model/Plant_disease.h5")
+        model = keras.models.load_model("Model/best_model_pd.h5")
 
         # Load the Image
         img = Image.open(img)
