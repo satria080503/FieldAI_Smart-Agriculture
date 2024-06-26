@@ -48,13 +48,13 @@ def show_page():
         img = img.resize((224, 224))
 
         # Convert Image to a numpy array
-        img = image.img_to_array(img, dtype=np.uint8)
-
+        img = image.img_to_array(img)
+        img = np.expand_dims(img, axis=0)
         # Scaling the Image Array values between 0 and 1
         img = np.array(img) / 255.0
 
         # Ensure the image is in the right format for prediction
-        img = np.expand_dims(img, axis=0)
+        
 
         # Get the Predicted Label for the loaded Image
         prediction = model.predict(img)
