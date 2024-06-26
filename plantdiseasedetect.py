@@ -8,6 +8,9 @@ from tensorflow import keras
 from tensorflow.keras.preprocessing import image
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+@tf.keras.utils.register_keras_serializable()
+def swish(x):
+    return x * tf.nn.sigmoid(x)
 
 def show_page():
     def get_plant_names():
@@ -17,7 +20,7 @@ def show_page():
         return supported_plants
 
     def predict(img):
-        model = keras.models.load_model("Model/best_model_pd.h5")
+        model = keras.models.load_model("Model/best_model_pd.h5", custom_objects={'swish': tf.keras.activations.swish})
 
         # Load the Image
         img = Image.open(img)
