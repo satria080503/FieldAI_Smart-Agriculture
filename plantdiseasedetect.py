@@ -52,6 +52,7 @@ def show_page():
         img = np.expand_dims(img, axis=0)
         # Scaling the Image Array values between 0 and 1
         img = np.array(img) / 255.0
+        print(f"Input image shape: {img.shape}") 
 
         # Ensure the image is in the right format for prediction
         
