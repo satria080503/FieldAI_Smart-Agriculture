@@ -15,14 +15,14 @@ class FixedDropout(Layer):
     def __init__(self, rate, **kwargs):
         super(FixedDropout, self).__init__(**kwargs)
         self.rate = rate
-        # Handle any additional arguments
-        self.seed = kwargs.get('seed', None)
-        self.noise_shape = kwargs.get('noise_shape', None)
+        # Ignore any additional arguments
+        kwargs.pop('seed', None)
+        kwargs.pop('noise_shape', None)
 
     def call(self, inputs, training=None):
         if not training:
             return inputs
-        return tf.nn.dropout(inputs, rate=self.rate, seed=self.seed, noise_shape=self.noise_shape)
+        return tf.nn.dropout(inputs, rate=self.rate)
 
 def show_page():
     def get_plant_names():
