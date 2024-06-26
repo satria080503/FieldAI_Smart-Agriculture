@@ -4,5 +4,6 @@ scikit-learn
 tensorflow
 Pillow
 plotly
-keras == 3.3.3
+keras
+Keras-Applications
 seaborn
