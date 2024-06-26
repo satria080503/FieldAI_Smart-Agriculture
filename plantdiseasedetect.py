@@ -36,10 +36,11 @@ def show_page():
 
     def predict(img):
         model = keras.models.load_model("Model/best_model_pd.h5", custom_objects={
-            'swish': swish,
-            'FixedDropout': FixedDropout,
-            'LeakyReLU': LeakyReLU,
+        'swish': swish,
+        'FixedDropout': FixedDropout,
+        'LeakyReLU': tf.keras.layers.LeakyReLU,
         })
+
         # Load the Image
         img = Image.open(img)
 
