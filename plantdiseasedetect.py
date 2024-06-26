@@ -8,9 +8,18 @@ from tensorflow import keras
 from tensorflow.keras.preprocessing import image
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+from tensorflow.keras.layers import Layer
+
 @tf.keras.utils.register_keras_serializable()
-def swish(x):
-    return x * tf.nn.sigmoid(x)
+class FixedDropout(Layer):
+    def __init__(self, rate, **kwargs):
+        super(FixedDropout, self).__init__(**kwargs)
+        self.rate = rate
+
+    def call(self, inputs, training=None):
+        if not training:
+            return inputs
+        return tf.nn.dropout(inputs, rate=self.rate)
 
 def show_page():
     def get_plant_names():
@@ -20,8 +29,10 @@ def show_page():
         return supported_plants
 
     def predict(img):
-        model = keras.models.load_model("Model/best_model_pd.h5", custom_objects={'swish': tf.keras.activations.swish})
-
+        model = keras.models.load_model("Model/best_model_pd.h5", custom_objects={
+        'swish': tf.keras.activations.swish,
+        'FixedDropout': FixedDropout
+        })
         # Load the Image
         img = Image.open(img)
 
