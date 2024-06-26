@@ -36,11 +36,10 @@ def show_page():
 
     def predict(img):
         model = keras.models.load_model("Model/best_model_pd.hdf5", custom_objects={
-        'swish': swish,
-        'FixedDropout': FixedDropout,
-        'LeakyReLU': tf.keras.layers.LeakyReLU,
+            'swish': swish,
+            'FixedDropout': FixedDropout,
+            'LeakyReLU': LeakyReLU,
         })
-
         # Load the Image
         img = Image.open(img)
 
@@ -48,14 +47,13 @@ def show_page():
         img = img.resize((224, 224))
 
         # Convert Image to a numpy array
-        img = image.img_to_array(img)
-        img = np.expand_dims(img, axis=0)
+        img = image.img_to_array(img, dtype=np.uint8)
+
         # Scaling the Image Array values between 0 and 1
         img = np.array(img) / 255.0
-        print(f"Input image shape: {img.shape}") 
 
         # Ensure the image is in the right format for prediction
-        
+        img = np.expand_dims(img, axis=0)
 
         # Get the Predicted Label for the loaded Image
         prediction = model.predict(img)
