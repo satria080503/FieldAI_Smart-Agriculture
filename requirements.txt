@@ -4,6 +4,4 @@ scikit-learn
 tensorflow
 Pillow
 plotly
-keras
-Keras-Applications
 seaborn
