@@ -35,7 +35,7 @@ def show_page():
         return supported_plants
 
     def predict(img):
-        model = keras.models.load_model("Model/best_model_pd.hdf5", custom_objects={
+        model = keras.models.load_model("Model/pd_mod1.h5", custom_objects={
             'swish': swish,
             'FixedDropout': FixedDropout,
             'LeakyReLU': LeakyReLU,
