@@ -47,17 +47,13 @@ def show_page():
         img = img.resize((224, 224))
 
         # Convert Image to a numpy array
-        img = image.img_to_array(img, dtype=np.uint8)
+        img = image.img_to_array(img)
 
-        # Scaling the Image Array values between 0 and 1
-        img = np.array(img) / 255.0
-
-        # Ensure the image is in the right format for prediction
-        img = np.expand_dims(img, axis=0)
-
+        img = np.expand_dims(img, axis=0) / 255.0
+        print(f"Input image shape: {img.shape}") 
         # Get the Predicted Label for the loaded Image
         prediction = model.predict(img)
-
+        print(f"Prediction shape: {prediction.shape}")
         # Label array
         labels = {0: 'Apple___Apple_scab', 1: 'Apple___Black_rot', 2: 'Apple___Cedar_apple_rust', 3: 'Apple___healthy',
                   4: 'Blueberry___healthy', 5: 'Cherry_(including_sour)___healthy', 6: 'Cherry_(including_sour)___Powdery_mildew',
